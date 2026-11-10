@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результат работы HashTable</title>
+    <link href="https://jsdelivr.net" rel="stylesheet">
+</head>
+<body class="bg-light p-5">
+<div class="container" style="max-width: 700px;">
+    
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white fw-bold">Поиск в MyHashMap по ID</div>
+        <div class="card-body">
+            {% if app %}
+                <h3 class="text-success mb-3">✨ Приложение найдено за O(1)!</h3>
+                <h4 class="text-primary">{{ app.app_name }}</h4>
+                <p><strong>Категория:</strong> {{ app.category }}</p>
+                <p><strong>Рейтинг:</strong> ⭐ {{ app.rating }}</p>
+                <p><strong>Скачивания:</strong> {{ app.maximum_installs }}</p>
+                <p><strong>Цена:</strong> {{ app.price }} {{ app.currency }}</p>
+            {% else %}
+                <div class="alert alert-warning">
+                    Приложение с ID <code>{{ app_id }}</code> не найдено в хэш-таблице.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-info">
+        <div class="card-header bg-info text-white fw-bold">📊 Статистика твоей Хэш-таблицы</div>
+        <div class="card-body bg-white">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Количество элементов (size):
+                    <span class="badge bg-primary rounded-pill">{{ stats.size }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Текущая емкость (capacity):
+                    <span class="badge bg-secondary rounded-pill">{{ stats.capacity }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Коэффициент загрузки (load_factor):
+                    <span class="badge bg-warning text-dark rounded-pill">{{ stats.load_factor }} / 0.75</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <div class="text-center mt-4">
+        <a href="/apps" class="btn btn-primary btn-lg">Назад к общей таблице</a>
+    </div>
+</div>
+</body>
+</html>
+

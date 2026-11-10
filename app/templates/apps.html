@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Play Таблица</title>
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; padding: 30px 0; }
+        .table-container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid px-5">
+    <div class="table-container">
+        <h2 class="mb-4 text-center text-primary fw-bold">База данных приложений Google Play</h2>
+        
+        <div class="row my-4 justify-content-center">
+            <div class="col-md-6">
+                <form action="/search-id" method="post" class="d-flex shadow-sm rounded p-2 bg-light">
+                    <input type="text" name="app_id" class="form-control me-2" placeholder="Введи точный App ID (например, com.ishakwe.gakondo)" required>
+                    <button type="submit" class="btn btn-primary text-nowrap">Найти в Хэш-таблице</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered align-middle table-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Название</th>
+                        <th>ID Приложения</th>
+                        <th>Категория</th>
+                        <th>Рейтинг</th>
+                        <th>Скачивания (Max)</th>
+                        <th>Цена</th>
+                        <th>Бесплатное</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for app in apps %}
+                    <tr>
+                        <td><strong>{{ app.app_name }}</strong></td>
+                        <td class="text-muted small">{{ app.app_id if app.app_id else 'нет id' }}</td>
+                        <td><span class="badge bg-secondary">{{ app.category }}</span></td>
+                        <td class="fw-bold text-warning">⭐ {{ app.rating if app.rating else '0.0' }}</td>
+                        <td>{{ app.maximum_installs if app.maximum_installs else '0' }}</td>
+                        <td>{{ app.price if app.price else '0.0' }} {{ app.currency }}</td>
+                        <td>
+                            {% if app.free %}
+                                <span class="badge bg-success">Да</span>
+                            {% else %}
+                                <span class="badge bg-danger">Нет</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item {% if page <= 1 %}disabled{% endif %}">
+                    <a class="page-link" href="/apps?page={{ page - 1 }}">Предыдущая</a>
+                </li>
+                <li class="page-item active">
+                    <span class="page-link">Страница {{ page }}</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="/apps?page={{ page + 1 }}">Следующая</a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+</div>
+
+</body>
+</html>
